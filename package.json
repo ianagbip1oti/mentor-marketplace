@@ -1,0 +1,20 @@
+{
+  "name": "mentor-market",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lana",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "pug": "^2.0.0-rc.4"
+  },
+  "devDependencies": {
+    "standard": "^10.0.3"
+  }
+}
