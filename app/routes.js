@@ -1,4 +1,11 @@
 
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated())
+        return next();
+
+    res.redirect('/login');
+}
+
 module.exports = (app, passport) => {
   app.get('/', (req, res) => res.render('index'))
 
@@ -22,4 +29,6 @@ module.exports = (app, passport) => {
   }))
 
   app.get('/signup', (req, res) => res.render('signup', { message: req.flash('signupMessage') }))
+  
+  app.get('/become-mentor', isLoggedIn, (req, res) => res.render('become-mentor', { message: req.flash('becomeMentorMessage') }))
 }

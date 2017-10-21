@@ -1,0 +1,29 @@
+<%- include('header') -%>
+<div class="container">
+  <div class="row mt-5 justify-content-center">
+    <div class="col-sm-12 col-md-9 col-lg-6">
+      
+      <% if (message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+      <% } %>
+    
+      <form method="post" action="/become-mentor">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" name="title" class="form-control" id="title" placeholder="Title">
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea name="description" class="form-control" id="description" rows="5"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="price">Price</label>
+          <input type="text" name="price" class="form-control" id="price" placeholder="Price">
+          <small class="form-text text-muted">Price in USD per hour</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Place Offer</button>
+      </form>
+    </div>
+  </div>
+</div>
+<%- include('footer') -%>
