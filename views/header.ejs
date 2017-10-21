@@ -17,13 +17,23 @@
       
       <div class="collapse navbar-collapse">
         <a class="navbar-brand" href="/">Mentor Marketplace</a>
+        
         <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
-          <li class="nav-item">
-            <a class="nav-link" href="/login">Log In</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/signup">Sign Up</a>
-          </li>
-        </ul>
+          <% if (req.isAuthenticated()) { %>
+            <li class="nav-item">
+              <span class="navbar-text">Welcome <%= req.user.email %></span>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Log Out</a>
+            </li>
+          <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Log In</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/signup">Sign Up</a>
+            </li>
+          <% } %>
+        </u>
       </div>
     </nav>

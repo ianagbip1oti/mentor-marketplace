@@ -5,17 +5,21 @@ const bcrypt = require('bcrypt-nodejs')
 const users = {}
 
 class User {
-  constructor(email, password) {
+  constructor (email, password) {
     this.email = email
     this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
   }
-  
-  save() {
+
+  isPassword (password) {
+    return bcrypt.compareSync(password, this.password)
+  }
+
+  save () {
     debug('Saving user %s', this.email)
     users[this.email] = this
   }
-  
-  static findByEmail(email) {
+
+  static findByEmail (email) {
     return users[email]
   }
 }

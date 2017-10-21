@@ -18,6 +18,11 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 
+app.use((req, res, next) => {
+  res.locals.req = req
+  next()
+})
+
 app.set('view engine', 'ejs')
 
 require('./app/routes.js')(app, passport)

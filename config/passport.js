@@ -8,24 +8,39 @@ module.exports = function (passport) {
   debug('Configuring passport...')
   passport.serializeUser((user, done) => done(null, user.email))
   passport.deserializeUser((email, done) => done(null, User.findByEmail(email)))
-   
-  debug('Setting up local-signup strategy')
-  passport.use('local-signup', new LocalStrategy({
+
+  const strategyOptions = {
     usernameField: 'email',
     passwordField: 'password',
-    passReqToCallback: true // allows us to pass back the entire request to the callback
-  }, (req, email, password, done) => {
+    passReqToCallback: true
+  }
+
+  debug('Setting up local-signup strategy')
+  passport.use('local-signup', new LocalStrategy(strategyOptions, (req, email, password, done) => {
     debug('Signing up %s', email)
 
-    var existing = User.findByEmail(email)
+    const existing = User.findByEmail(email)
 
     if (existing) {
       done(null, false, req.flash('signupMessage', 'That email is already registered'))
     } else {
-      var newUser = new User(email, password)
+      const newUser = new User(email, password)
       newUser.save()
       done(null, newUser)
     }
   }))
+
+  debug('Setting up local-login strategy')
+  passport.use('local-login', new LocalStrategy(strategyOptions, (req, email, password, done) => {
+    debug('Logging in %s', email)
+    const user = User.findByEmail(email)
+
+    if (user && user.isPassword(password)) {
+      done(null, user)
+    } else {
+      done(null, false, req.flash('loginMessage', 'Invalid login'))
+    }
+  }))
+
   debug('Passport configured.')
 }
