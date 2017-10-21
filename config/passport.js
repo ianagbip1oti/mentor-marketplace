@@ -7,11 +7,8 @@ const User = require('../app/models/user.js')
 module.exports = function (passport) {
   debug('Configuring passport...')
   passport.serializeUser((user, done) => done(null, user.email))
-  passport.deserializeUser(function (email, done) {
-    debug('Deserialize %s', email)
-    done(null, User.findByEmail(email))
-  })
-
+  passport.deserializeUser((email, done) => done(null, User.findByEmail(email)))
+   
   debug('Setting up local-signup strategy')
   passport.use('local-signup', new LocalStrategy({
     usernameField: 'email',
