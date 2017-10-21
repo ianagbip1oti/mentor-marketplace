@@ -1,4 +1,6 @@
 
+const Mentor = require('./models/mentor.js')
+
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
         return next();
@@ -7,7 +9,7 @@ function isLoggedIn(req, res, next) {
 }
 
 module.exports = (app, passport) => {
-  app.get('/', (req, res) => res.render('index'))
+  app.get('/', (req, res) => res.render('index', { mentors: Mentor.all() }))
 
   app.post('/login', passport.authenticate('local-login', {
     successRedirect: '/',
@@ -29,6 +31,12 @@ module.exports = (app, passport) => {
   }))
 
   app.get('/signup', (req, res) => res.render('signup', { message: req.flash('signupMessage') }))
+  
+  app.post('/become-mentor', (req, res) => {
+    new Mentor(req.user.email, req.body.title, req.body.description, req.body.price).save()
+    
+    res.redirect('/')
+  })
   
   app.get('/become-mentor', isLoggedIn, (req, res) => res.render('become-mentor', { message: req.flash('becomeMentorMessage') }))
 }

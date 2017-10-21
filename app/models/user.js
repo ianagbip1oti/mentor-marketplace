@@ -1,4 +1,4 @@
-const debug = require('debug')('app:modles:user')
+const debug = require('debug')('app:models:user')
 
 const bcrypt = require('bcrypt-nodejs')
 
